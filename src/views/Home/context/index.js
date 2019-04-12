@@ -1,6 +1,6 @@
 import firebase                                                        from 'firebase/app';
 import React, { useCallback, useEffect, useReducer, memo, useContext } from 'react';
-import { forEach, chunk, omit, map }                                   from 'lodash';
+import { forEach, chunk, omit, map, unionBy }                          from 'lodash';
 import 'firebase/firestore';
 
 import { ACTION_TYPES } from 'consts';
@@ -57,6 +57,7 @@ const reducer = (state, action) => {
     case ACTION_TYPES.TOGGLE_ALL:
       return {
         ...state,
+        data        : unionBy(action.payload, state.data, 'id'),
         filteredData: action.payload,
       };
     default:
